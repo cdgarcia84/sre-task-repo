@@ -49,3 +49,11 @@ serverFiles:
           annotations:
             description: Pod {{ $labels.namespace }}/{{ $labels.pod }} has been in a non-ready state for longer than 5 minutes.
             summary: Pod has been in a non-ready state for more than 2 minutes.
+        - alert: PodUpcommerceNotReady
+          expr: kube_pod_status_ready{namespace='sre', condition="true",pod="upcommerce-app-8698d8bd45-cvvmg"}
+          for: 10s
+          labels:
+            severity: page
+          annotations:
+            description: Alert for testing mail and slack alerts
+            summary: Alert for testing mail and slack alerts
