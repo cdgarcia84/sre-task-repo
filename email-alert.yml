@@ -3,18 +3,24 @@ data:
   alertmanager.yml: |
     global: 
       resolve_timeout: 1m
+      slack_api_url: 'https://hooks.slack.com/services/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'
 
     receivers:
     - name: default-receiver
 
+    - name: 'slack-notificaions'
+      slack_configs:
+      - channel: '#alert-sre-tp1' 
+        send_resolved: true
+
     - name: 'gmail-notifications'
       email_configs:
-      - to: example@gmail.com 
-        from: example@gmail.com # Update your from mail id here
+      - to: sreuplimit@gmail.com 
+        from: sreuplimit@gmail.com # Update your from mail id here
         smarthost: smtp.gmail.com:587
-        auth_username: example@gmail.com # Update your from mail id here
-        auth_identity: example@gmail.com # Update your from mail id here
-        auth_password: password # Update your app-password here
+        auth_username: sreuplimit@gmail.com # Update your from mail id here
+        auth_identity: sreuplimit@gmail.com # Update your from mail id here
+        auth_password: Password1234Password # Update your app-password here
         send_resolved: true
         headers:
           subject: " Prometheus -  Alert  "
@@ -29,7 +35,8 @@ data:
       routes:
       - match:
           severity: page
-        receiver: 'gmail-notifications'
+        #receiver: 'gmail-notifications'
+        receiver: 'slack-notificaions'
 
     templates:
     - /etc/alertmanager/*.tmpl
